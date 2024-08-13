@@ -1,0 +1,26 @@
+hora = int(input("Escribe la hora (0-23): "))
+minutos = int(input("Escribe los minutos (0-59): "))
+
+hora_correcta = True
+if hora < 0 or hora > 23:
+    hora_correcta = False
+if minutos < 0 or minutos > 59:
+    hora_correcta = False
+
+if hora_correcta:
+    if hora >= 12:
+        periodo = "PM"
+        if hora > 12:
+            hora_am_pm = hora - 12
+        else:
+            hora_am_pm = 12
+    else:
+        periodo = "AM"
+        if hora == 0:
+            hora_am_pm = 12  
+        else:
+            hora_am_pm = hora
+
+    print(f"La hora en formato AM/PM es: {hora_am_pm:02}:{minutos:02} {periodo}")
+else:
+    print("Valores ingresados no válidos")
