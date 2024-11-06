@@ -1,0 +1,25 @@
+import requests
+import json
+
+url = "http://api.weatherapi.com/v1/history.json?key=641cb1794a0d4b90bae112227240511=bucaramanga&dt=2024-11-01"
+
+r = requests.get(url)
+data = r.json()
+
+hourly_temps = data['forecast']['forecastday'][0]['hour']
+average_temps = []
+
+for hour in range(24):
+    temp_sum = 0
+    count = 0
+    for record in hourly_temps:
+        if record['time'].endswith(f'{hour:02d}:00'):
+            temp_sum += record['temp_c']
+            count += 1
+    if count > 0:
+        average_temps.append(temp_sum / count)
+    else:
+        average_temps.append(None)  
+
+for hour in range(24):
+    print(f'{hour:02d}:00 - {average_temps[hour]:.2f}°C' if average_temps[hour] is not None else f'{hour:02d}:00 - No data')
